@@ -149,7 +149,7 @@ export const columns: ColumnDef<Ticket>[] = [
               Copy ticket ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <UpdateTidketModal />
+            <UpdateTidketModal data={{title:row.getValue("title"), status:row.getValue("status"), tag:row.getValue("tag"), priority:row.getValue("priority"), id:row.getValue("id")}}/>
             <DropdownMenuItem>Delete ticket</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

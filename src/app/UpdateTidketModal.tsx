@@ -32,8 +32,8 @@ import {
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
-const  editTicket = async (title:string, tag:string, status: string, priority:string)=>{
-  const res = await fetch("http://localhost:3000/api/tickets", {
+const  editTicket = async (id : number, title:string, tag:string, status: string, priority:string)=>{
+  const res = await fetch(`http://localhost:3000/api/tickets/${id}`, {
     method: "PATCH",
     body: JSON.stringify({
       title,
@@ -51,16 +51,16 @@ const  editTicket = async (title:string, tag:string, status: string, priority:st
 
 }
 
-const UpdateTidketModal = () => {
-    const [title, setTitle] = useState("");
-    const [tag, setTag] = useState("");
-    const [status, setStatus] = useState("");
-    const [priority, setPriority] = useState("");
+const UpdateTidketModal = ({data} : {data : any}) => {
+    const [title, setTitle] = useState(data.title);
+    const [tag, setTag] = useState(data.tag);
+    const [status, setStatus] = useState(data.status);
+    const [priority, setPriority] = useState(data.priority);
     const [open, setOpen] = useState(false);
 
     const router = useRouter();
     const handleSubmit = async () => {
-      const res = await editTicket(title, tag, status, priority);
+      const res = await editTicket(data.id, title, tag, status, priority);
       setTitle("");
       setTag("");
       setStatus("");
@@ -71,7 +71,7 @@ const UpdateTidketModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-       <DropdownMenuItem>Edit ticket details</DropdownMenuItem>
+       <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Edit ticket details</DropdownMenuItem>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
