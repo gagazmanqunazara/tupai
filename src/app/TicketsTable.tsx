@@ -44,6 +44,7 @@ import {
 import { AddTicketModal } from "./AddTicketModal";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import UpdateTidketModal from "./UpdateTidketModal";
 
 export type Ticket = {
   id: string;
@@ -148,7 +149,7 @@ export const columns: ColumnDef<Ticket>[] = [
               Copy ticket ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit ticket details</DropdownMenuItem>
+            <UpdateTidketModal />
             <DropdownMenuItem>Delete ticket</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -156,6 +157,9 @@ export const columns: ColumnDef<Ticket>[] = [
     },
   },
 ];
+
+
+
 
 const TicketsTable = ({ data }: { data: Ticket[] }) => {
   const [sorting, setSorting] = useState<SortingState>([]);

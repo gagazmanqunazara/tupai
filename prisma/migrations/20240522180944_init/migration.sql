@@ -2,7 +2,7 @@
 CREATE TABLE `Ticket` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
-    `status` INTEGER NOT NULL,
+    `status` VARCHAR(191) NOT NULL,
     `tag` VARCHAR(191) NOT NULL,
     `priority` VARCHAR(191) NOT NULL,
 

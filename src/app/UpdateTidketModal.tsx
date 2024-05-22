@@ -1,13 +1,4 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import React, { useState } from 'react'
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
@@ -20,17 +11,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog";
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
-async function addTicket(
-  title: string,
-  tag: string,
-  status: string,
-  priority: string
-) {
+const  editTicket = async (title:string, tag:string, status: string, priority:string)=>{
   const res = await fetch("http://localhost:3000/api/tickets", {
-    method: "POST",
+    method: "PATCH",
     body: JSON.stringify({
       title,
       tag,
@@ -44,33 +48,30 @@ async function addTicket(
   }
 
   return res.json();
+
 }
 
-export function AddTicketModal() {
-  const [title, setTitle] = useState("");
-  const [tag, setTag] = useState("");
-  const [status, setStatus] = useState("");
-  const [priority, setPriority] = useState("");
-  const [open, setOpen] = useState(false);
+const UpdateTidketModal = () => {
+    const [title, setTitle] = useState("");
+    const [tag, setTag] = useState("");
+    const [status, setStatus] = useState("");
+    const [priority, setPriority] = useState("");
+    const [open, setOpen] = useState(false);
 
-  const router = useRouter();
-
-  const handleSubmit = async () => {
-    const res = await addTicket(title, tag, status, priority);
-    setTitle("");
-    setTag("");
-    setStatus("");
-    setPriority("");
-    router.refresh();
-    setOpen(false);
-  };
-
+    const router = useRouter();
+    const handleSubmit = async () => {
+      const res = await editTicket(title, tag, status, priority);
+      setTitle("");
+      setTag("");
+      setStatus("");
+      setPriority("");
+      router.refresh();
+      setOpen(false);
+    };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="ml-auto">
-          <Plus className="mr-2 h-4 w-4" /> Add Ticket
-        </Button>
+       <DropdownMenuItem>Edit ticket details</DropdownMenuItem>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
@@ -148,5 +149,7 @@ export function AddTicketModal() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
+
+export default UpdateTidketModal
